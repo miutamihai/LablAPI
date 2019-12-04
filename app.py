@@ -3,6 +3,8 @@ import uuid
 from flask import Flask, render_template, request, url_for
 from werkzeug.utils import redirect
 import os
+import cv2
+import numpy as np
 
 from config import Config
 from functions.get_max_probability import get_max_probability
@@ -51,7 +53,8 @@ def home_page():
         if request.form['password'] != 'L@blAPI1268.!':
             return 'Access denied, wrong password'
         if file and allowed_file(file.filename):
-            processed_path = preprocess_input(file)
+            img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_COLOR)
+            processed_path = preprocess_input(img)
             load = get_prediction(processed_path)
             result = get_max_probability(load)
             return result
@@ -69,7 +72,8 @@ def upload_page(access_key):
             if file.filename == '':
                 return render_template('upload.html', msg='No file selected')
             if file and allowed_file(file.filename):
-                processed_path = preprocess_input(file)
+                img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_COLOR)
+                processed_path = preprocess_input(img)
                 load = get_prediction(processed_path)
                 result = get_max_probability(load)
                 # result = str(load)

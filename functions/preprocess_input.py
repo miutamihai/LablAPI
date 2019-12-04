@@ -5,9 +5,9 @@ import numpy as np
 from PIL import Image
 
 
-def preprocess_input(filename):
-    org_image = Image.open(filename)
-    image = cv2.cvtColor(np.array(org_image), cv2.COLOR_RGB2BGR)
+def preprocess_input(image):
+    # org_image = Image.open(filename)
+    # image = cv2.cvtColor(np.array(org_image), cv2.COLOR_RGB2BGR)
     if image is None:
         print('Can not read/find the image at ')
         exit(-1)
@@ -24,6 +24,6 @@ def preprocess_input(filename):
     Dy = cv2.Sobel(image, cv2.CV_8UC1, 0, 1)
     M = cv2.addWeighted(Dx, 1, Dy, 1, 0)
     ret, binary = cv2.threshold(M, 10, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-    output_path = os.path.join('processed.jpg')
+    output_path = os.path.join('processed.png')
     cv2.imwrite(output_path, binary)
     return output_path
