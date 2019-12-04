@@ -1,12 +1,13 @@
-import cv2
-from PIL import Image
-import numpy as np
 import os
 
+import cv2
+import numpy as np
+from PIL import Image
 
-def preprocess_input(filename, root_path):
-    # image = cv2.imread(path, cv2.IMREAD_COLOR)
-    image = Image.open(filename)
+
+def preprocess_input(filename):
+    org_image = Image.open(filename)
+    image = cv2.cvtColor(np.array(org_image), cv2.COLOR_RGB2BGR)
     if image is None:
         print('Can not read/find the image at ')
         exit(-1)
