@@ -1,0 +1,14 @@
+{
+  "Host": "www.wine-searcher.com",
+  "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:71.0) Gecko/20100101 Firefox/71.0",
+  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+  "Accept-Language": "en-US,en;q=0.5",
+  "Accept-Encoding": "gzip, deflate, br",
+  "Referer": "https://www.wine-searcher.com/find/guinness+draft+beer",
+  "Connection": "keep-alive",
+  "Cookie": "cookie_enabled=true; cookie_enabled=true; COOKIE_ID=PRSXCHW1DV2002K; visit=PRSXCHW1DV2002K%7C20200102124250%7C%2Ffind%2Fguinness%2Bdraft%2Bbeer%2Bireland%7C%7Cend+; fflag=flag_store_manager%3A0%2Cend; search=start%7Cguinness%2Bdraft%2Bbeer%7C1%7CIreland%7CEUR%7C%7C%7C%7C%7C%7C%7C%7C%7Ce%7Cend; _ga=GA1.1.755263686.1577968975; _ga_M0W3BEYMXL=GS1.1.1577971145.2.1.1577973096.0; _pxvid=65917904-2d5d-11ea-a489-0242ac12000d; ID=NR1XCKL1D7K003D; IDPWD=I04850446; _csrf=TNogW1oFD3Q_vfrA066MSQ-hpqdokCB2; _pxde=bca9aa8ff4014ed0a098739abcf07614608d04209328667bb33d610ebdfa6a97:eyJ0aW1lc3RhbXAiOjE1Nzc5NzMwOTgwMTcsImZfa2IiOjAsImlwY19pZCI6W119; _px3=013590a4f70bbdbe16a99ae1f79d791956668127e8fafd10765bfc0140098acb:6uOLFCnmoofYAULPPNBHYwYZp8vylLjiQ+CY5YpbFTklFIRYuSiFFmrcRisEeFxy0DVPz1zjipNtrjyoZg8u6w==:1000:VTJjU9OvZ8fNDaHDCQihdN+XkpVldS2ujjIXwncaps95/mfRfUdWlItFwLCuC/R8cZQDWud339sKPejdtK6t5Aqp0kYLD0jOqr0azOZq0ozIYb4bZ42VYHIzJHN63AubSzmE7RlFlTkNavBqCvjd1MHvK+Ek7bA7iUf2jn5UTX0=; cookie_enabled=true; geoinfo=44.2811|28.0909|Saligny|Romania|RO|92.85.67.169|668157|IP|Saligny%2C+Romania; ws_prof=157344%7C67254351%7C0; _pxff_idp=1; _pxff_wa=1; _pxff_tm=1",
+  "Upgrade-Insecure-Requests": "1",
+  "DNT": "1",
+  "Cache-Control": "max-age=0",
+  "TE": "Trailers"
+}

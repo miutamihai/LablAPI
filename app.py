@@ -1,16 +1,16 @@
 import uuid
 
-from flask import Flask, render_template, request, url_for
-from werkzeug.utils import redirect
-import os
 import cv2
 import numpy as np
+from flask import Flask, render_template, request, url_for
+from werkzeug.utils import redirect
 
 from config import Config
 from functions.get_max_probability import get_max_probability
 from functions.get_prediction import get_prediction
 from functions.preprocess_input import preprocess_input
 from validation import LoginForm
+from get_average_price import get_average_price
 
 UPLOAD_FOLDER = '/static/uploads/'
 
@@ -57,7 +57,7 @@ def home_page():
             processed_path = preprocess_input(img)
             load = get_prediction(processed_path)
             result = get_max_probability(load)
-            return result
+            return result + ' ' + get_average_price(result)
 
 
 @app.route('/upload/<uuid:access_key>', methods=['GET', 'POST'])
@@ -79,7 +79,7 @@ def upload_page(access_key):
                 # result = str(load)
                 return render_template('upload.html',
                                        msg='Successfully processed',
-                                       extracted_text=result)
+                                       extracted_text=result + ' ' + get_average_price(result))
         elif request.method == 'GET':
             return render_template('upload.html')
 
