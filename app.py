@@ -1,4 +1,5 @@
 import uuid
+import json
 
 import requests
 import cv2
@@ -60,7 +61,9 @@ def home_page():
             result = get_max_probability(load)
             country = request.country['country']
             country = country[0].lower() + country[1:]
-            return result + ' ' + get_average_price(result, country)
+            data = {'label': result, 'price': get_average_price(result, country)}
+            data = json.dumps(data)
+            return data
 
 
 @app.route('/upload/<uuid:access_key>', methods=['GET', 'POST'])
