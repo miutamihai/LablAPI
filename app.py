@@ -1,5 +1,6 @@
 import uuid
 
+import requests
 import cv2
 import numpy as np
 from flask import Flask, render_template, request, url_for
@@ -57,7 +58,9 @@ def home_page():
             processed_path = preprocess_input(img)
             load = get_prediction(processed_path)
             result = get_max_probability(load)
-            return result + ' ' + get_average_price(result)
+            country = request.country['country']
+            country = country[0].lower() + country[1:]
+            return result + ' ' + get_average_price(result, country)
 
 
 @app.route('/upload/<uuid:access_key>', methods=['GET', 'POST'])
@@ -76,10 +79,13 @@ def upload_page(access_key):
                 processed_path = preprocess_input(img)
                 load = get_prediction(processed_path)
                 result = get_max_probability(load)
+                r = requests.get('https://api.ipdata.co?api-key=test').json()
+                country = r['country_name']
+                country = country[0].lower() + country[1:]
                 # result = str(load)
                 return render_template('upload.html',
                                        msg='Successfully processed',
-                                       extracted_text=result + ' ' + get_average_price(result))
+                                       extracted_text=result + ' ' + get_average_price(result, country))
         elif request.method == 'GET':
             return render_template('upload.html')
 
