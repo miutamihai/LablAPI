@@ -22,8 +22,8 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 ACCESS_KEY = uuid.uuid1()
 
-app = Flask(__name__)
-app.config.from_object(Config)
+application = Flask(__name__)
+application.config.from_object(Config)
 
 
 def allowed_file(filename):
@@ -31,7 +31,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@application.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -44,7 +44,7 @@ def login():
     return render_template('login.html', title='Sign In', form=form)
 
 
-@app.route('/', methods=['POST'])
+@application.route('/', methods=['POST'])
 def home_page():
     if request.method == 'POST':
         if 'file' not in request.files:
@@ -66,7 +66,7 @@ def home_page():
             return data
 
 
-@app.route('/upload/<uuid:access_key>', methods=['GET', 'POST'])
+@application.route('/upload/<uuid:access_key>', methods=['GET', 'POST'])
 def upload_page(access_key):
     if access_key != ACCESS_KEY:
         return 'Access denied'
@@ -94,4 +94,4 @@ def upload_page(access_key):
 
 
 if __name__ == '__main__':
-    app.run()
+    application.run(host='0.0.0.0')

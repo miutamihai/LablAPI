@@ -2,10 +2,10 @@
 # THIS FILE IS GENERATED FROM NUMPY SETUP.PY
 #
 # To compare versions robustly, use `numpy.lib.NumpyVersion`
-short_version = '1.18.0'
-version = '1.18.0'
-full_version = '1.18.0'
-git_revision = '2410c6d0a63cb56455fc9ab6affcf1a776c82134'
+short_version = '1.18.1'
+version = '1.18.1'
+full_version = '1.18.1'
+git_revision = '91118b3363b636f932f7ff6748d8259e9eb2c23a'
 release = True
 
 if not release:
