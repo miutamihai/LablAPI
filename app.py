@@ -1,9 +1,11 @@
-import uuid
 import json
+import uuid
+from functions.string_to_rgb import stringToRGB
 
-import requests
 import cv2
 import numpy as np
+import requests
+from PIL import Image
 from flask import Flask, render_template, request, url_for
 from werkzeug.utils import redirect
 
@@ -11,8 +13,8 @@ from config import Config
 from functions.get_max_probability import get_max_probability
 from functions.get_prediction import get_prediction
 from functions.preprocess_input import preprocess_input
-from validation import LoginForm
 from get_average_price import get_average_price
+from validation import LoginForm
 
 UPLOAD_FOLDER = '/static/uploads/'
 
@@ -69,13 +71,16 @@ def home_page():
 @application.route('/binary', methods=['POST'])
 def post_binary_file():
     if request.method == 'POST':
-        if 'file' not in request.files:
-            return 'No file found'
-        file = request.files['file']
+        file = ''
+        for i in request.files:
+            file = i
+        print(type(file))
+        image = stringToRGB(file)
+        print(type(file))
         if request.form['password'] != 'L@blAPI1268.!':
             return 'Access denied, wrong password'
         else:
-            img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_COLOR)
+            img = cv2.imdecode(np.fromstring(image.read(), np.uint8), cv2.IMREAD_COLOR)
             processed_path = preprocess_input(img)
             load = get_prediction(processed_path)
             result = get_max_probability(load)
