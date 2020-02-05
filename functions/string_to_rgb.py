@@ -1,12 +1,12 @@
 import base64
-import io
-from PIL import Image
-import cv2
-import numpy as np
-
+from io import BytesIO
+from functions.base64_normalisation import base64_normalisation
 
 # Take in base64 string and return cv image
+from PIL import Image
+
+
 def stringToRGB(base64_string):
-    imgdata = base64.b64decode(str(base64_string))
-    image = Image.open(io.BytesIO(imgdata))
-    return cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
+    #im = Image.open(BytesIO(base64.b64decode(base64_string, '-_')))
+    im = Image.open(BytesIO(base64.decodebytes(base64_string)))
+    return im

@@ -71,17 +71,13 @@ def home_page():
 @application.route('/binary', methods=['POST'])
 def post_binary_file():
     if request.method == 'POST':
-        file = ''
-        for i in request.files:
-            file = i
-        print(type(file))
-        image = stringToRGB(file)
-        print(type(file))
+        print(type(request.form['image']))
+        image = stringToRGB(request.form['image'])
         if request.form['password'] != 'L@blAPI1268.!':
             return 'Access denied, wrong password'
         else:
-            img = cv2.imdecode(np.fromstring(image.read(), np.uint8), cv2.IMREAD_COLOR)
-            processed_path = preprocess_input(img)
+            #img = cv2.imdecode(np.fromstring(image.read(), np.uint8), cv2.IMREAD_COLOR)
+            processed_path = preprocess_input(image)
             load = get_prediction(processed_path)
             result = get_max_probability(load)
             country = request.form['country']
