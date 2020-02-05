@@ -51,7 +51,7 @@ def home_page():
             return 'No file found'
         file = request.files['file']
         if file.filename == '':
-            return 'No file found'
+            return 'File has no filename'
         if request.form['password'] != 'L@blAPI1268.!':
             return 'Access denied, wrong password'
         if file and allowed_file(file.filename):
@@ -59,7 +59,27 @@ def home_page():
             processed_path = preprocess_input(img)
             load = get_prediction(processed_path)
             result = get_max_probability(load)
-            country = request.country['country']
+            country = request.form['country']
+            country = country[0].lower() + country[1:]
+            data = {'label': result, 'price': get_average_price(result, country)}
+            data = json.dumps(data)
+            return data
+
+
+@application.route('/binary', methods=['POST'])
+def post_binary_file():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return 'No file found'
+        file = request.files['file']
+        if request.form['password'] != 'L@blAPI1268.!':
+            return 'Access denied, wrong password'
+        else:
+            img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_COLOR)
+            processed_path = preprocess_input(img)
+            load = get_prediction(processed_path)
+            result = get_max_probability(load)
+            country = request.form['country']
             country = country[0].lower() + country[1:]
             data = {'label': result, 'price': get_average_price(result, country)}
             data = json.dumps(data)
