@@ -7,6 +7,6 @@ from PIL import Image
 
 
 def stringToRGB(base64_string):
-    #im = Image.open(BytesIO(base64.b64decode(base64_string, '-_')))
-    im = Image.open(BytesIO(base64.decodebytes(base64_string)))
+    input_bytes = bytearray(base64_string, 'utf-8')
+    im = Image.open(input_bytes)
     return im

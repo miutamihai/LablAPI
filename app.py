@@ -52,19 +52,26 @@ def home_page():
         if 'file' not in request.files:
             return 'No file found'
         file = request.files['file']
+        print(file.filename)
         if file.filename == '':
             return 'File has no filename'
         if request.form['password'] != 'L@blAPI1268.!':
             return 'Access denied, wrong password'
         if file and allowed_file(file.filename):
             img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_COLOR)
+            print('Successfully converted image')
             processed_path = preprocess_input(img)
+            print('Successfully processed image')
             load = get_prediction(processed_path)
+            print('Successfully got prediction')
             result = get_max_probability(load)
+            print(result)
             country = request.form['country']
             country = country[0].lower() + country[1:]
+            print(country)
             data = {'label': result, 'price': get_average_price(result, country)}
             data = json.dumps(data)
+            print(data)
             return data
 
 
@@ -103,8 +110,7 @@ def upload_page(access_key):
                 processed_path = preprocess_input(img)
                 load = get_prediction(processed_path)
                 result = get_max_probability(load)
-                r = requests.get('https://api.ipdata.co?api-key=test').json()
-                country = r['country_name']
+                country = 'Ireland'
                 country = country[0].lower() + country[1:]
                 # result = str(load)
                 return render_template('upload.html',
