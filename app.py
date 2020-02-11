@@ -65,6 +65,10 @@ def home_page():
             load = get_prediction(processed_path)
             print('Successfully got prediction')
             result = get_max_probability(load)
+            if result == 'Unknown object':
+                data = {'label': result, 'price': 'NA'}
+                data = json.dumps(data)
+                return data
             print(result)
             country = request.form['country']
             country = country[0].lower() + country[1:]
