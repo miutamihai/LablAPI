@@ -60,9 +60,9 @@ def home_page():
         if file and allowed_file(file.filename):
             img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_COLOR)
             print('Successfully converted image')
-            processed_path = preprocess_input(img)
+            #processed_path = preprocess_input(img)
             print('Successfully processed image')
-            load = get_prediction(processed_path)
+            load = get_prediction(img)
             print('Successfully got prediction')
             result = get_max_probability(load)
             if result == 'Unknown object':

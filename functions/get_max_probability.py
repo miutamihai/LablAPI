@@ -2,6 +2,9 @@ import json
 
 
 def get_max_probability(load):
+    if load is None:
+        return 'Unknown object'
+    print(load)
     result_list = list(json.loads(load)['result'])
     res = result_list[0]['prediction']
     number_of_results = len(res)
