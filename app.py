@@ -79,6 +79,16 @@ def home_page():
             return data
 
 
+@application.route('/get_average_price', methods=['POST'])
+def get_average_price_route():
+    if request.method == 'POST':
+        label = request.form['label']
+        country = request.form['country']
+        data = {'label': label, 'price': get_average_price(label, country)}
+        data = json.dumps(data)
+        return data
+
+
 @application.route('/binary', methods=['POST'])
 def post_binary_file():
     if request.method == 'POST':
@@ -87,7 +97,6 @@ def post_binary_file():
         if request.form['password'] != 'L@blAPI1268.!':
             return 'Access denied, wrong password'
         else:
-            #img = cv2.imdecode(np.fromstring(image.read(), np.uint8), cv2.IMREAD_COLOR)
             processed_path = preprocess_input(image)
             load = get_prediction(processed_path)
             result = get_max_probability(load)
