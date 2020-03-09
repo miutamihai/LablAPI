@@ -1,10 +1,8 @@
 import json
 import uuid
-from functions.string_to_rgb import stringToRGB
 
 import cv2
 import numpy as np
-import requests
 from PIL import Image
 from flask import Flask, render_template, request, url_for
 from werkzeug.utils import redirect
@@ -12,9 +10,12 @@ from werkzeug.utils import redirect
 from config import Config
 from functions.get_max_probability import get_max_probability
 from functions.get_prediction import get_prediction
+from functions.get_rgb_prediction import get_rgb_prediction
 from functions.preprocess_input import preprocess_input
+from functions.string_to_rgb import stringToRGB
 from get_average_price import get_average_price
 from validation import LoginForm
+from functions.image_to_byte_array import image_to_byte_array
 
 UPLOAD_FOLDER = '/static/uploads/'
 
@@ -63,6 +64,37 @@ def home_page():
             processed_path = preprocess_input(img)
             print('Successfully processed image')
             load = get_prediction(processed_path)
+            print('Successfully got prediction')
+            result = get_max_probability(load)
+            if result == 'Unknown object':
+                data = {'label': result, 'price': 'NA'}
+                data = json.dumps(data)
+                return data
+            print(result)
+            country = request.form['country']
+            country = country[0].lower() + country[1:]
+            print(country)
+            data = {'label': result, 'price': get_average_price(result, country)}
+            data = json.dumps(data)
+            print(data)
+            return data
+
+
+@application.route('/post_rgb_image', methods=['POST'])
+def post_rgb_image():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return 'No file found'
+        file = request.files['file']
+        print(file.filename)
+        if file.filename == '':
+            return 'File has no filename'
+        if request.form['password'] != 'L@blAPI1268.!':
+            return 'Access denied, wrong password'
+        if file and allowed_file(file.filename):
+            # img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_COLOR)
+            img = Image.open(file)
+            load = get_rgb_prediction(image_to_byte_array(img))
             print('Successfully got prediction')
             result = get_max_probability(load)
             if result == 'Unknown object':
